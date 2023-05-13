@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Spawner : MonoBehaviour
     private int _currentWaveNumber = 0;
     private float _timeAfterLastSpawn;
     private int _spawned;
+
+    public event UnityAction AllEnemySpawned;
 
     private void OnValidate()
     {
@@ -43,8 +46,19 @@ public class Spawner : MonoBehaviour
 
         if (_currentWave.Count <= _spawned)
         {
+            if (_waves.Count > _currentWaveNumber + 1)
+            {
+                AllEnemySpawned.Invoke();
+            }
+
             _currentWave = null;
         }
+    }
+
+    public void NextWave()
+    {
+        SetWave(++_currentWaveNumber);
+        _spawned = 0;
     }
 
     private void InstantiateEnemy()

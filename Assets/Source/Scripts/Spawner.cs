@@ -8,13 +8,17 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Player _player;
 
+    private PlayerMoney _playerMoney;
+    private PlayerHealth _playerHealth;
     private Wave _currentWave;
     private int _currentWaveNumber = 0;
     private float _timeAfterLastSpawn;
     private int _spawned;
+    private int _killed;
+    private int _AllEnemy;
 
     public event UnityAction AllEnemySpawned;
-    public event UnityAction<int, int> EnemyCountChanged; 
+    public event UnityAction<int, int> EnemyDying; 
 
     private void OnValidate()
     {
@@ -26,6 +30,9 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        _playerMoney = _player.gameObject.GetComponent<PlayerMoney>();
+        _playerHealth = _player.gameObject.GetComponent<PlayerHealth>();
+
         SetWave(_currentWaveNumber);
     }
 
@@ -43,7 +50,6 @@ public class Spawner : MonoBehaviour
             InstantiateEnemy();
             _spawned++;
             _timeAfterLastSpawn = 0;
-            EnemyCountChanged?.Invoke(_spawned, _currentWave.Count);
         }
 
         if (_currentWave.Count <= _spawned)
@@ -69,21 +75,25 @@ public class Spawner : MonoBehaviour
                                     _spawnPoint.rotation, _spawnPoint)
                                     .GetComponent<Enemy>();
 
-        enemy.Init(_player);
+        enemy.Init(_playerHealth);
         enemy.Dying += OnEnemyDying;
     }
 
     private void SetWave(int index)
     {
         _currentWave = _waves[index];
-        EnemyCountChanged?.Invoke(0, 1);
+        _killed = 0;
+        _AllEnemy = _currentWave.Count;
     }
 
     private void OnEnemyDying(Enemy enemy)
     {
         enemy.Dying -= OnEnemyDying;
 
-        _player.AddMoney(enemy.Reward);
+        _killed++;
+        EnemyDying?.Invoke(_killed, _AllEnemy);
+
+        _playerMoney.AddMoney(enemy.Reward);
     }
 }
 

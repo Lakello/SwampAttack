@@ -26,7 +26,7 @@ public class AttackState : State
         _lastAttackTime -= Time.deltaTime;
     }
 
-    private void Attack(Player target)
+    private void Attack(PlayerHealth target)
     {
         _animator.Play(EnemyAnimatorController.States.Attack);
         target.ApplyDamage(_damage);

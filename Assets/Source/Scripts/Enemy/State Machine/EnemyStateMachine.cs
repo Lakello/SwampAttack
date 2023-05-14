@@ -5,7 +5,7 @@ public class EnemyStateMachine : MonoBehaviour
 {
     [SerializeField] private State _firstState;
 
-    private Player _target;
+    private PlayerHealth _target;
     private State _currentState;
 
     public State Current => _currentState;

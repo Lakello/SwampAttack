@@ -5,5 +5,6 @@ public class EnemyAnimatorController
         public static string Walk = nameof(Walk);
         public static string Attack = nameof(Attack);
         public static string Celebration = nameof(Celebration);
+        public static string Death = nameof(Death);
     }
 }

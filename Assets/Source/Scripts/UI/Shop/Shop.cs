@@ -8,8 +8,14 @@ public class Shop : MonoBehaviour
     [SerializeField] private WeaponView _template;
     [SerializeField] private GameObject _itemContainer;
 
+    private PlayerMoney _playerMoney;
+    private PlayerWeapon _playerWeapon;
+
     private void Start()
     {
+        _playerMoney = _player.gameObject.GetComponent<PlayerMoney>();
+        _playerWeapon = _player.gameObject.GetComponent<PlayerWeapon>();
+
         for (int i = 0; i < _weapons.Count; i++)
         {
             AddItem(_weapons[i]);
@@ -30,9 +36,9 @@ public class Shop : MonoBehaviour
 
     private void TrySellWeapon(Weapon weapon, WeaponView weaponView)
     {
-        if (weapon.Price <= _player.Money)
+        if (weapon.Price <= _playerMoney.Money)
         {
-            _player.BuyWeapon(weapon);
+            _playerWeapon.BuyWeapon(weapon);
             weapon.Buy();
             weaponView.SellButtonClick -= OnSellButtonClick;
         }

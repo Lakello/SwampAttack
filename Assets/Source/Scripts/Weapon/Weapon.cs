@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField] protected Bullet Bullet;
+    [SerializeField] protected Ammo Ammo;
 
     [SerializeField] private string _label;
     [SerializeField] private int _price;
@@ -14,7 +14,10 @@ public abstract class Weapon : MonoBehaviour
     public Sprite Icon => _icon;
     public bool IsBuyed => _isBuyed;
 
-    public abstract void Shoot(Transform shootpoint);
+    public abstract string IdleAnimationName { get; }
+    public abstract string AttackAnimationName { get; }
+
+    public abstract void Attack(Transform shootpoint);
 
     public void Buy()
     {

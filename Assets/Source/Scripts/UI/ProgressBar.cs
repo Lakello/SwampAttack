@@ -6,12 +6,12 @@ public class ProgressBar : Bar
 
     private void OnEnable()
     {
-        _spawner.EnemyCountChanged += OnValueChanged;
+        _spawner.EnemyDying += OnValueChanged;
         Slider.value = 0;
     }
 
     private void OnDisable()
     {
-        _spawner.EnemyCountChanged -= OnValueChanged;
+        _spawner.EnemyDying -= OnValueChanged;
     }
 }

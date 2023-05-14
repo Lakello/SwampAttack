@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    public override void Shoot(Transform shootpoint)
+    public override string IdleAnimationName => PlayerAnimatorController.States.IdleGun;
+    public override string AttackAnimationName => PlayerAnimatorController.States.AttackGun;
+
+    public override void Attack(Transform shootpoint)
     {
-        Instantiate(Bullet, shootpoint.position, Quaternion.identity);
+        Instantiate(Ammo, shootpoint.position, Quaternion.identity);
     }
 }

@@ -6,14 +6,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private int _reward;
 
-    private Player _target;
+    private PlayerHealth _target;
 
-    public Player Target => _target;
+    public PlayerHealth Target => _target;
     public int Reward => _reward;
 
     public event UnityAction<Enemy> Dying;
 
-    public void Init(Player target)
+    public void Init(PlayerHealth target)
     {
         _target = target;
     }
